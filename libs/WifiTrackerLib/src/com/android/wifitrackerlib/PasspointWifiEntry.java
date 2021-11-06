@@ -493,13 +493,16 @@ public class PasspointWifiEntry extends WifiEntry implements WifiEntry.WifiEntry
             ScanResult bestScanResult = null;
             if (homeScanResults != null && !homeScanResults.isEmpty()) {
                 currentScanResults.addAll(homeScanResults);
+                updateWifiGenerationInfo(homeScanResults);
             } else if (roamingScanResults != null && !roamingScanResults.isEmpty()) {
                 currentScanResults.addAll(roamingScanResults);
                 mIsRoaming = true;
+                updateWifiGenerationInfo(roamingScanResults);
             }
             bestScanResult = getBestScanResultByLevel(currentScanResults);
             if (bestScanResult != null) {
                 mWifiConfig.SSID = "\"" + bestScanResult.SSID + "\"";
+                updateTransitionModeCapa(bestScanResult);
             }
             if (getConnectedState() == CONNECTED_STATE_DISCONNECTED) {
                 mLevel = bestScanResult != null
