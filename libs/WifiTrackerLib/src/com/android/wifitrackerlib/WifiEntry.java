@@ -1190,6 +1190,11 @@ public class WifiEntry implements Comparable<WifiEntry> {
 
             if (currResultWifiStandard < minConnectionCapability)
                 minConnectionCapability = currResultWifiStandard;
+            /*Do not include VHT support for 2ghz when device capability is 11AC
+              and AP operating in 11AX */
+            else if (result.is24GHz() && currResultWifiStandard == ScanResult.WIFI_STANDARD_11AX &&
+                     minConnectionCapability == ScanResult.WIFI_STANDARD_11AC)
+                minConnectionCapability = ScanResult.WIFI_STANDARD_11N;
         }
 
         mWifiStandard = minConnectionCapability;
