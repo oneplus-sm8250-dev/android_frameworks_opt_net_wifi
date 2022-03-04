@@ -109,6 +109,7 @@ endif
     ifneq ($(TARGET_DEVICE),qssi)
       LIB_WIFI_HAL := libwifi-hal-qcom
       VENDOR_LOCAL_SHARED_LIBRARIES := libcld80211
+      VENDOR_LOCAL_SHARED_LIBRARIES += libcrypto
     endif #End of Check for qssi target
   else ifeq ($(BOARD_WLAN_DEVICE), mrvl)
     # this is commented because none of the nexus devices
