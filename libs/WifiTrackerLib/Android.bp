@@ -9,6 +9,9 @@ android_library {
         "androidx.preference_preference",
         "SettingsLibHelpUtils",
     ],
+    defaults: [
+        "framework-wifi-vendor-hide-access-defaults",
+    ],
 
     // TODO(b/187099809): Re-enable lint check once the min_sdk_version is updated
     lint: {

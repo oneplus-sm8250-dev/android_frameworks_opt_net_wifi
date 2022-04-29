@@ -695,6 +695,9 @@ public class StandardWifiEntry extends WifiEntry {
     private synchronized void updateTargetScanResultInfo() {
         // Update the level using the scans matching the target security type
         final ScanResult bestScanResult = getBestScanResultByLevel(mTargetScanResults);
+        if (bestScanResult != null) {
+            updateTransitionModeCapa(bestScanResult);
+        }
 
         if (getConnectedState() == CONNECTED_STATE_DISCONNECTED) {
             mLevel = bestScanResult != null
@@ -703,6 +706,8 @@ public class StandardWifiEntry extends WifiEntry {
             // Average speed is used to prevent speed label flickering from multiple APs.
             mSpeed = getAverageSpeedFromScanResults(mScoreCache, mTargetScanResults);
         }
+
+        updateWifiGenerationInfo(mTargetScanResults);
     }
 
     @WorkerThread
