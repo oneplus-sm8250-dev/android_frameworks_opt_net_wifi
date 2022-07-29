@@ -149,6 +149,7 @@ class OsuWifiEntry extends WifiEntry {
 
         final ScanResult bestScanResult = getBestScanResultByLevel(scanResults);
         if (bestScanResult != null) {
+            updateTransitionModeCapa(bestScanResult);
             mSsid = bestScanResult.SSID;
             if (getConnectedState() == CONNECTED_STATE_DISCONNECTED) {
                 mLevel = mWifiManager.calculateSignalLevel(bestScanResult.level);
@@ -156,6 +157,7 @@ class OsuWifiEntry extends WifiEntry {
         } else {
             mLevel = WIFI_LEVEL_UNREACHABLE;
         }
+        updateWifiGenerationInfo(mCurrentScanResults);
         notifyOnUpdated();
     }
 

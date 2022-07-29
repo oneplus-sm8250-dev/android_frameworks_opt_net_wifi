@@ -125,6 +125,12 @@ public class BaseWifiTracker implements LifecycleObserver {
                         .filter(mRequestedScoreKeys::add)
                         .collect(toList()));
                 handleScanResultsAvailableAction(intent);
+            } else if (WifiManager.PARTIAL_SCAN_RESULTS_AVAILABLE_ACTION.equals(action)) {
+                mNetworkScoreManager.requestScores(mWifiManager.getScanResults().stream()
+                        .map(NetworkKey::createFromScanResult)
+                        .filter(mRequestedScoreKeys::add)
+                        .collect(toList()));
+                handleScanResultsAvailableAction(intent);
             } else if (WifiManager.CONFIGURED_NETWORKS_CHANGED_ACTION.equals(action)) {
                 handleConfiguredNetworksChangedAction(intent);
             } else if (WifiManager.NETWORK_STATE_CHANGED_ACTION.equals(action)) {
@@ -336,6 +342,7 @@ public class BaseWifiTracker implements LifecycleObserver {
         IntentFilter filter = new IntentFilter();
         filter.addAction(WifiManager.WIFI_STATE_CHANGED_ACTION);
         filter.addAction(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION);
+        filter.addAction(WifiManager.PARTIAL_SCAN_RESULTS_AVAILABLE_ACTION);
         filter.addAction(WifiManager.CONFIGURED_NETWORKS_CHANGED_ACTION);
         filter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
         filter.addAction(WifiManager.RSSI_CHANGED_ACTION);
